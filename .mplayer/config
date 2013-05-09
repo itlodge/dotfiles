@@ -1,0 +1,11 @@
+# Write your default config options here!
+#-------------------------------------
+#note:
+##r & t to change the position of sub
+#--------------------------------------
+
+sub-fuzziness=1
+sub-autoscale=2
+subfont-text-scale=2.5
+subcp=cp936
+
