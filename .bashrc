@@ -15,9 +15,10 @@ alias b='cd ..'  #back
 alias ll='ls -lh --color=auto'
 alias grep='grep --color=auto'
 alias s='sudo shutdown now' #shutdown
+alias dropbox='~/.dropbox-dist/dropboxd'
 
 # my script path
-export PATH=$PATH:$HOME:script
+export PATH=$PATH:$HOME/script
 
 # for android
 export ANT_HOME=/opt/apache-ant
