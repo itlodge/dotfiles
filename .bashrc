@@ -17,6 +17,8 @@ alias grep='grep --color=auto'
 alias s='sudo shutdown now' #shutdown
 alias dropbox='~/.dropbox-dist/dropboxd'
 alias clone='git clone --depth=1'
+alias wgetp='wget -r -c -k -L'
+alias em='emacs -nw -Q'
 
 # my script path
 export PATH=$PATH:$HOME/script
@@ -25,6 +27,9 @@ export PATH=$PATH:$HOME/script
 export ANT_HOME=/opt/apache-ant
 export PATH=$PATH:/opt/android-sdk/tools
 export PATH=$PATH:$ANT_HOME/bin
+
+# for rails
+export PATH=$PATH:$HOME/.gem/ruby/2.0.0/bin
 
 # for less color
 export LESS_TERMCAP_mb=$'\e[01;34m'
@@ -40,3 +45,5 @@ export LESS_TERMCAP_us=$'\e[01;32m'
 
 
 
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
