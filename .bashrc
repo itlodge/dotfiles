@@ -19,6 +19,7 @@ alias dropbox='~/.dropbox-dist/dropboxd'
 alias clone='git clone --depth=1'
 alias wgetp='wget -r -c -k -L'
 alias em='emacs -nw -Q'
+alias sudo em='sudo emacs -nw -Q'
 
 # my script path
 export PATH=$PATH:$HOME/script
