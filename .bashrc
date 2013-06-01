@@ -18,8 +18,8 @@ alias s='sudo shutdown now' #shutdown
 alias dropbox='~/.dropbox-dist/dropboxd'
 alias clone='git clone --depth=1'
 alias wgetp='wget -r -c -k -L'
-alias em='emacs -nw -Q'
-alias sudo em='sudo emacs -nw -Q'
+alias em='sudo emacs -nw -Q'
+alias rake='bundle exec rake'
 
 # my script path
 export PATH=$PATH:$HOME/script
@@ -41,10 +41,3 @@ export LESS_TERMCAP_so=$'\e[01;44;33m'
 export LESS_TERMCAP_ue=$'\e[0m'
 export LESS_TERMCAP_us=$'\e[01;32m'
 
-
-
-
-
-
-
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
