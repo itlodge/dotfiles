@@ -1,0 +1,11 @@
+set zoom-step 30
+set scroll-step 50
+
+# Appparance
+set window-height 1000
+set window-width 800
+set adjust-open "width"
+set default-bg "#555"
+set default-fg "#bbb"
+set statusbar-bg "#888"
+set statusbar-fg "#ddd"
