@@ -5,20 +5,21 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-alias ls='ls --color=auto'
 PS1='[\u@\h \W]\$ '
 
 export DISPLAY=:0.0
 
 # my alias
 alias b='cd ..'  #back
+alias bb='cd ../../'
+alias ls='ls --color=auto -F'
 alias ll='ls -lh --color=auto'
 alias grep='grep --color=auto'
 alias s='sudo shutdown now' #shutdown
 alias dropbox='~/.dropbox-dist/dropboxd'
 alias clone='git clone --depth=1'
 alias wgetp='wget -r -c -k -L'
-alias em='sudo emacs -nw -Q'
+alias em='emacs -nw -Q'
 alias rake='bundle exec rake'
 
 # my script path
