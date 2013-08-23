@@ -5,7 +5,9 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-PS1='[\u@\h \W]\$ '
+# PS1='[\u@\h \W]\$ '
+
+PS1='[\W]\$ '
 
 export DISPLAY=:0.0
 
@@ -21,6 +23,8 @@ alias clone='git clone --depth=1'
 alias wgetp='wget -r -c -k -L'
 alias em='emacs -nw -Q'
 alias rake='bundle exec rake'
+#alias xp='sudo qemu-system-x86_64 -hda ~/tmp/winxp.img -cdrom /dev/cdrom -boot c -m 1024'
+
 
 # my script path
 export PATH=$PATH:$HOME/script
