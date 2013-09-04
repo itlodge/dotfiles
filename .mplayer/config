@@ -8,4 +8,5 @@ sub-fuzziness=1
 sub-autoscale=2
 subfont-text-scale=2.5
 subcp=cp936
-
+# 繁体
+#subcp=cp950

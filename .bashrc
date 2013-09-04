@@ -21,6 +21,7 @@ alias grep='grep --color=auto'
 alias dropbox='~/.dropbox-dist/dropboxd'
 alias em='emacs -nw -Q'
 alias rake='bundle exec rake'
+alias yaourt-color='PAGER="less -R" yaourt --pager --color'
 
 alias s='sudo shutdown now' #shutdown
 alias clip='xsel | xclip -sel clip'

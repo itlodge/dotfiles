@@ -4,14 +4,14 @@
   <property name="backdrop" type="empty">
     <property name="screen0" type="empty">
       <property name="monitor0" type="empty">
-        <property name="image-path" type="string" value="/home/monkey/.config/xfce4/desktop/backdrop.list"/>
+        <property name="image-path" type="string" value="/home/monkey/pictures/apple/1365381313bp7mAu.jpg"/>
         <property name="last-image" type="string" value="/home/monkey/Wallpaper/696540,106.jpg"/>
         <property name="last-single-image" type="string" value="/home/monkey/Wallpaper/696540,106.jpg"/>
-        <property name="last-image-list" type="string" value="/home/monkey/.config/xfce4/desktop/backdrop.list"/>
+        <property name="last-image-list" type="string" value="/home/monkey/pictures/apple/1365381313bp7mAu.jpg"/>
         <property name="image-show" type="bool" value="true"/>
         <property name="color-style" type="int" value="0"/>
         <property name="backdrop-cycle-enable" type="bool" value="true"/>
-        <property name="backdrop-cycle-timer" type="uint" value="10"/>
+        <property name="backdrop-cycle-timer" type="uint" value="1"/>
       </property>
     </property>
   </property>
