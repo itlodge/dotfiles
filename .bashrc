@@ -15,13 +15,14 @@ export DISPLAY=:0.0
 alias ls='ls --color=auto -F'
 alias ll='ls -lh'
 alias la='ls -a'
-
 alias grep='grep --color=auto'
 
 alias dropbox='~/.dropbox-dist/dropboxd'
 alias em='emacs -nw -Q'
 alias rake='bundle exec rake'
 alias yaourt-color='PAGER="less -R" yaourt --pager --color'
+alias xelatex='xelatex -file-line-error -halt-on-error'
+alias python='python2'
 
 alias s='sudo shutdown now' #shutdown
 alias clip='xsel | xclip -sel clip'
