@@ -1,8 +1,8 @@
 " Ui
 " ================
 syntax on
-colorscheme pablo
-filetype plugin on
+colorscheme shine 
+set hls
 
 " Coding
 " ================
@@ -13,7 +13,7 @@ set ruler
 set autoindent
 set cindent
 set smartindent
-set tabstop=4
+" set tabstop=4
 set shiftwidth=4
 set expandtab
 
@@ -24,3 +24,9 @@ inoremap <C-j> <Esc>:m .+1<CR>==gi
 inoremap <C-k> <Esc>:m .-2<CR>==gi
 vnoremap <C-j> :m '>+1<CR>gv=gv
 vnoremap <C-k> :m '<-2<CR>gv=gv
+
+" Auto change the working directory the same as the current file
+set autochdir
+
+" Let Backspace erase normally
+set backspace=indent,eol,start
