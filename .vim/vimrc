@@ -1,7 +1,8 @@
 " Ui
 " ================
 syntax on
-colorscheme shine 
+" colorscheme shine  " In company
+colorscheme pablo  " My computer
 set hls
 
 " Coding
