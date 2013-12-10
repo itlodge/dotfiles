@@ -1,22 +1,40 @@
-" Ui
-" ================
-syntax on
-" colorscheme shine  " In company
-colorscheme pablo  " My computer
-set hls
+" ============================================================
+" Begin ui
 
-" Coding
-" ================
+syntax on
+
+colorscheme shine  " Color scheme in company computer
+" colorscheme pablo  " Color scheme in my personal computer
+
+" Hightlight search and incremtal search(start when type the first character)
+set hlsearch
+set incsearch
+
+" Show the command I type
+set showcmd
+
 " show line and column number
 set ruler 
+
+" End ui
+" ============================================================
+
+" ============================================================
+" Begin coding
 
 " indent for C/C++
 set autoindent
 set cindent
 set smartindent
-" set tabstop=4
 set shiftwidth=2
+set softtabstop=2  " Tab to be two spaces.
 set expandtab
+
+" indent for different languages
+filetype on
+filetype plugin indent on
+
+autocmd FileType java setlocal shiftwidth=4 softtabstop=4
 
 " Move lines up and down
 nnoremap <C-j> :m .+1<CR>==
@@ -31,3 +49,33 @@ set autochdir
 
 " Let Backspace erase normally
 set backspace=indent,eol,start
+
+" Folding by indentation, zo(open), zc(close), za(toggle) 
+set foldmethod=indent
+
+" The <Esc> key in my keyboard is so small
+inoremap jj <Esc>
+
+" New blank line in normal mode
+nnoremap <silent> zj o<Esc>
+nnoremap <silent> zk O<Esc>
+
+" Next one will center the line.
+map n nzz
+map N Nzz
+
+" Abbreviations
+ab #d #define
+ab #i #include
+ab pu public
+ab pr private
+ab str struct
+ab cl class
+ab td typedef
+
+" Now I can use ``sy`` to copy to system clipboard
+" and ``sp`` to paste to system clipboard.
+nnoremap s "+
+
+" End coding
+" ============================================================
