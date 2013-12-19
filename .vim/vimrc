@@ -69,13 +69,31 @@ ab #d #define
 ab #i #include
 ab pu public
 ab pr private
-ab str struct
 ab cl class
 ab td typedef
 
 " Now I can use ``sy`` to copy to system clipboard
 " and ``sp`` to paste to system clipboard.
 nnoremap s "+
+vnoremap s "+
+
+" Close html tag
+let g:closetag_html_style=1
+source ~/.vim/scripts/closetag.vim
+imap <C-c> <C-_>
+nmap <C-c> <C-_>
+
+" ``once_`` to expand '#ifndef ...'
+function! InsertHeaderGuard() 
+    let def = '__' . expand('%:r') . '_' . expand('%:e') . '__'
+    let def = toupper(def)
+    let guard =  '#ifndef ' . def . "\n"
+    let guard .= '#define ' . def . "\n\n"
+    let guard .= '#endif // ' . def 
+    return guard
+endfunction
+
+iabbrev once_ <c-r>=InsertHeaderGuard()<cr>
 
 " End coding
 " ============================================================
