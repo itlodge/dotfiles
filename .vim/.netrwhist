@@ -1,7 +1,7 @@
 let g:netrw_dirhistmax  =10
 let g:netrw_dirhist_cnt =5
-let g:netrw_dirhist_1='/home/yuanhang/work/src/xwalk/runtime/android/java/src/org/xwalk'
-let g:netrw_dirhist_2='/home/yuanhang/work/src/xwalk/runtime/android/java/src/org/xwalk/runtime'
-let g:netrw_dirhist_3='/home/yuanhang/work/src/xwalk/runtime/android/java/src/org/xwalk/runtime/extension'
-let g:netrw_dirhist_4='/home/yuanhang/work/src/xwalk/runtime/android/java/src/org/xwalk/runtime/extension/api'
-let g:netrw_dirhist_5='/home/yuanhang/work/src/xwalk/runtime/android/java/src/org/xwalk/runtime/extension/api/device_capabilities'
+let g:netrw_dirhist_1='/Users/yuanhang/projects/fin_sails_koala/api/controllers'
+let g:netrw_dirhist_2='/Users/yuanhang/projects/fin_sails_koala/api'
+let g:netrw_dirhist_3='/Users/yuanhang/projects/fin_sails_koala/api/data'
+let g:netrw_dirhist_4='/Users/yuanhang/projects/fin_sails_koala/api'
+let g:netrw_dirhist_5='/Users/yuanhang/projects/fin_sails_koala'

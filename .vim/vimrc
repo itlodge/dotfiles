@@ -1,10 +1,33 @@
+" 去掉vi一致性的Bug
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+set runtimepath^=~/.vim/bundle/ctrlp.vim
+
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+call vundle#end()            " required
+filetype plugin indent on    " required
+
 " ============================================================
 " Begin ui
 
+" :E into Explore mode
+let g:netrw_liststyle=3
+
 syntax on
 
-"colorscheme shine  " Color scheme in company computer
+" colorscheme shine  " Color scheme in company computer
 colorscheme pablo  " Color scheme in my personal computer
+"colorscheme delek  " Color scheme in my personal computer
+"colorscheme desert  " Color scheme in my personal computer
 
 " Hightlight search and incremtal search(start when type the first character)
 set hlsearch
@@ -13,50 +36,30 @@ set incsearch
 " Show the command I type
 set showcmd
 
-" show line and column number
+" Show line and column number
 set ruler 
 
-if exists("+showtabline")
-     function MyTabLine()
-         let s = ''
-         let t = tabpagenr()
-         let i = 1
-         while i <= tabpagenr('$')
-             let buflist = tabpagebuflist(i)
-             let winnr = tabpagewinnr(i)
-             "let s .= '%' . i . 'T'
-             "let s .= (i == t ? '%1*' : '%2*')
-             "let s .= ' '
-             "let s .= i . ':'
-             "let s .= winnr . '/' . tabpagewinnr(i,'$')
-             let s .= ' %*'
-             let s .= (i == t ? '%#TabLineSel#' : '%#TabLine#')
-             let file = bufname(buflist[winnr - 1])
-             let file = fnamemodify(file, ':p:t')
-             if file == ''
-                 let file = '[No Name]'
-             endif
-             let s .= file
-             let i = i + 1
-         endwhile
-         let s .= '%T%#TabLineFill#%='
-         let s .= (tabpagenr('$') > 1 ? '%999XX' : 'X')
-         return s
-     endfunction
-     set stal=2
-     set tabline=%!MyTabLine()
-     map     <F10>    :tabnext<CR>
-     map!    <F10>    <C-O>:tabnext<CR>
-     map     <S-F10>  :tabprev<CR>
-     map!    <S-F10>  <C-O>:tabprev<CR>
-endif 
+" Disable swap files
+set noswapfile
+set backup 
+set backupdir=~/tmp,/var/tmp,/tmp 
+set backupskip=/tmp/*
+set directory=~/tmp,/var/tmp,/tmp 
+set writebackup
+
+" Clang complete
+let s:clang_library_path='/Library/Developer/CommandLineTools/usr/lib'
+if isdirectory(s:clang_library_path)
+    let g:clang_library_path=s:clang_library_path
+endif
+
 " End ui
 " ============================================================
 
 " ============================================================
 " Begin coding
 
-" indent for C/C++
+" indent for C/C++, Ruby
 set autoindent
 set cindent
 set smartindent
@@ -68,7 +71,10 @@ set expandtab
 filetype on
 filetype plugin indent on
 
-autocmd FileType java setlocal shiftwidth=4 softtabstop=4
+autocmd FileType java setlocal sw=4 sts=4 et
+autocmd BufRead,BufNewFile *.java setl sw=4 sts=4 et
+autocmd FileType xml setlocal sw=2 sts=2 et
+autocmd BufRead,BufNewFile *.xml setlocal sw=2 sts=2 et
 
 " Move lines up and down
 nnoremap <C-j> :m .+1<CR>==
@@ -98,18 +104,21 @@ nnoremap <silent> zk O<Esc>
 map n nzz
 map N Nzz
 
-" edit a file or jump to it if already open
-nnoremap <C-x><C-f> :tab drop
-nnoremap <S-h> gT
-nnoremap <S-l> gt
-
 " Abbreviations
-ab #d #define
-ab #i #include
-ab pu public
-ab pr private
-ab cl class
-ab td typedef
+func Eatchar(pat)
+  let c = nr2char(getchar(0))
+  return (c =~ a:pat) ? '' : c
+endfunc
+
+iab #d #define<c-r>=Eatchar('\s')<cr>
+iab #i #include<c-r>=Eatchar('\s')<cr>
+iab pu public<c-r>=Eatchar('\s')<cr>
+iab pr private<c-r>=Eatchar('\s')<cr>
+"iab str struct<c-r>=Eatchar('\s')<cr>
+iab cl class<c-r>=Eatchar('\s')<cr>
+iab td typedef<c-r>=Eatchar('\s')<cr>
+iab ad: android:<c-r>=Eatchar('\s')<cr>
+iab xdate <c-r>=strftime("20%y/%m/%d")<cr>
 
 " Now I can use ``sy`` to copy to system clipboard
 " and ``sp`` to paste to system clipboard.
@@ -122,17 +131,12 @@ source ~/.vim/scripts/closetag.vim
 imap <C-c> <C-_>
 nmap <C-c> <C-_>
 
-" ``once_`` to expand '#ifndef ...'
-function! InsertHeaderGuard() 
-    let def = '__' . expand('%:r') . '_' . expand('%:e') . '__'
-    let def = toupper(def)
-    let guard =  '#ifndef ' . def . "\n"
-    let guard .= '#define ' . def . "\n\n"
-    let guard .= '#endif // ' . def 
-    return guard
-endfunction
+" Open files
+nnoremap <C-x><C-f> :tabfind
+nnoremap <S-h> gT
+nnoremap <S-l> gt
 
-iabbrev once_ <c-r>=InsertHeaderGuard()<cr>
-
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
 " End coding
 " ============================================================
