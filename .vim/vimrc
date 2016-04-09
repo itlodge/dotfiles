@@ -16,6 +16,7 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'pangloss/vim-javascript'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'ternjs/tern_for_vim'
+Plugin 'scrooloose/syntastic'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -94,6 +95,21 @@ set writebackup
 
 " ============================================================
 " Begin coding
+
+" syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+"let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+" js standard
+"let g:syntastic_javascript_checkers = ['standard']
+"autocmd bufwritepost *.js silent !standard-format -w %
+"set autoread
 
 " indent for C/C++, Ruby
 set autoindent
@@ -176,5 +192,6 @@ nnoremap <S-l> gt
 
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_custom_ignore = 'node_modules'
 " End coding
 " ============================================================
