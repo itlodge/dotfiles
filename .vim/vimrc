@@ -30,9 +30,9 @@ let g:netrw_liststyle=3
 syntax on
 
 "colorscheme shine  " Color scheme in company computer
-"colorscheme pablo  " Color scheme in my personal computer
+colorscheme pablo  " Color scheme in my personal computer
 "colorscheme delek  " Color scheme in my personal computer
-colorscheme desert  " Color scheme in my personal computer
+"colorscheme desert  " Color scheme in my personal computer
 
 " Hightlight search and incremtal search(start when type the first character)
 set hlsearch
