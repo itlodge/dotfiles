@@ -17,6 +17,7 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'ternjs/tern_for_vim'
 Plugin 'scrooloose/syntastic'
+Plugin 'digitaltoad/vim-pug'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -30,9 +31,9 @@ let g:netrw_liststyle=3
 syntax on
 
 "colorscheme shine  " Color scheme in company computer
-colorscheme pablo  " Color scheme in my personal computer
+"colorscheme pablo  " Color scheme in my personal computer
 "colorscheme delek  " Color scheme in my personal computer
-"colorscheme desert  " Color scheme in my personal computer
+colorscheme desert  " Color scheme in my personal computer
 
 " Hightlight search and incremtal search(start when type the first character)
 set hlsearch
@@ -90,6 +91,8 @@ set backupskip=/tmp/*
 set directory=~/tmp,/var/tmp,/tmp 
 set writebackup
 
+" 配置立即生效
+autocmd BufWritePost $MYVIMRC source $MYVIMRC
 " End ui
 " ============================================================
 
@@ -122,6 +125,7 @@ set expandtab
 " indent for different languages
 filetype on
 filetype plugin indent on
+filetype indent on
 
 autocmd FileType java setlocal sw=4 sts=4 et
 autocmd BufRead,BufNewFile *.java setl sw=4 sts=4 et
@@ -144,6 +148,7 @@ set backspace=indent,eol,start
 
 " Folding by indentation, zo(open), zc(close), za(toggle) 
 set foldmethod=indent
+" set foldmethod=syntax
 
 " The <Esc> key in my keyboard is so small
 inoremap jj <Esc>
