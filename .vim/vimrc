@@ -17,16 +17,26 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'ternjs/tern_for_vim'
 Plugin 'scrooloose/syntastic'
-Plugin 'digitaltoad/vim-pug'
-" Plugin 'Chiel92/vim-autoformat'
-" Plugin 'JamshedVesuna/vim-markdown-preview'
+" Plugin 'digitaltoad/vim-pug'
+Plugin 'fatih/vim-go'
+Plugin 'vim-airline/vim-airline'
+Plugin 'mattn/emmet-vim'
+" I don't need
+" Plugin 'Raimondi/delimitMate'
+Plugin 'posva/vim-vue'
+Plugin 'tpope/vim-fugitive'
+Plugin 'terryma/vim-multiple-cursors'
+" Plugin 'dkprice/vim-easygrep'
+Plugin 'buoto/gotests-vim'
+Plugin 'jalvesaq/Nvim-R'
+" Plugin 'artur-shaik/vim-javacomplete2'
+Plugin 'aklt/plantuml-syntax'
+" Plugin 'scrooloose/vim-slumlord'
+Plugin 'leafgarland/typescript-vim'
+Plugin 'djoshea/vim-autoread'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
-
-" call plug#begin('~/.vim/plugged')
-" Plug 'pangloss/vim-javascript'
-" call plug#end()
 
 " 配置立即生效
 autocmd BufWritePost $MYVIMRC source $MYVIMRC
@@ -35,14 +45,15 @@ autocmd BufWritePost $MYVIMRC source $MYVIMRC
 " Begin ui
 
 " :E into Explore mode
-let g:netrw_liststyle=3
+" let g:netrw_liststyle=3
 
 syntax on
 
-"colorscheme shine  " Color scheme in company computer
-colorscheme pablo  " Color scheme in my personal computer
-"colorscheme delek  " Color scheme in my personal computer
-"colorscheme desert  " Color scheme in my personal computer
+" colorscheme shine  " Color scheme in company computer
+" colorscheme pablo  " Color scheme in my personal computer
+" colorscheme delek  " Color scheme in my personal computer
+colorscheme desert  " Color scheme in my personal computer
+" colorscheme slate
 
 " Hightlight search and incremtal search(start when type the first character)
 set hlsearch
@@ -100,25 +111,51 @@ set backupskip=/tmp/*
 set directory=~/tmp,/var/tmp,/tmp 
 set writebackup
 
+" 显示文件位置
+set laststatus=2
+" hi statusline ctermfg=15 ctermbg=2
+
 " End ui
 " ============================================================
 
 " ============================================================
 " Begin coding
 
+set autoread
+au CursorHold * checktime
+
 let mapleader=";"
+
+if $TMUX == ''
+  " set statusline+=%F
+  set clipboard+=unnamed
+endif
 
 " syntastic
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_auto_loc_list = 1
-"let g:syntastic_check_on_open = 1
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
+" let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
-
 let g:syntastic_javascript_checkers = ['eslint']
+" let g:syntastic_typescript_checkers = ['tslint']
+let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
+" typescript: find tslint.json
+function! FindTslintConfig()
+    return fnamemodify(findfile('tslint.json', './;'), ':p')
+endfunction
+function! FindTypescriptRoot()
+    return fnamemodify(findfile('tsconfig.json', './;'), ':h')
+endfunction
+" let g:syntastic_typescript_checkers = ['tsc', FindTypescriptRoot() . '/node_modules/.bin/tslint']
+let g:syntastic_typescript_checkers = ['tsc', './node_modules/.bin/tslint']
+" let g:syntastic_typescript_tslint_args = ['-c', FindTslintConfig(), '--type-check', '--project', FindTypescriptRoot()]
+let g:syntastic_typescript_tslint_args = ['-c', FindTslintConfig()]
+
+" js standard
 "autocmd bufwritepost *.js silent !standard-format -w %
 "set autoread
 
@@ -134,18 +171,19 @@ set expandtab
 filetype on
 filetype plugin indent on
 
+autocmd FileType go setlocal sw=4 sts=4 et
 autocmd FileType java setlocal sw=4 sts=4 et
 autocmd BufRead,BufNewFile *.java setl sw=4 sts=4 et
 autocmd FileType xml setlocal sw=2 sts=2 et
 autocmd BufRead,BufNewFile *.xml setlocal sw=2 sts=2 et
 
 " Move lines up and down
-nnoremap <C-j> :m .+1<CR>==
-nnoremap <C-k> :m .-2<CR>==
-inoremap <C-j> <Esc>:m .+1<CR>==gi
-inoremap <C-k> <Esc>:m .-2<CR>==gi
-vnoremap <C-j> :m '>+1<CR>gv=gv
-vnoremap <C-k> :m '<-2<CR>gv=gv
+" nnoremap <C-j> :m .+1<CR>==
+" nnoremap <C-k> :m .-2<CR>==
+" inoremap <C-j> <Esc>:m .+1<CR>==gi
+" inoremap <C-k> <Esc>:m .-2<CR>==gi
+" vnoremap <C-j> :m '>+1<CR>gv=gv
+" vnoremap <C-k> :m '<-2<CR>gv=gv
 
 " Auto change the working directory the same as the current file
 set autochdir
@@ -175,15 +213,15 @@ if !exists("*Eatchar")
   endfunc
 endif
 
-iab #d #define<c-r>=Eatchar('\s')<cr>
-iab #i #include<c-r>=Eatchar('\s')<cr>
-iab pu public<c-r>=Eatchar('\s')<cr>
-iab pr private<c-r>=Eatchar('\s')<cr>
-"iab str struct<c-r>=Eatchar('\s')<cr>
-iab cl class<c-r>=Eatchar('\s')<cr>
-iab td typedef<c-r>=Eatchar('\s')<cr>
-iab ad: android:<c-r>=Eatchar('\s')<cr>
-iab xdate <c-r>=strftime("20%y/%m/%d")<cr>
+" iab #d #define<c-r>=Eatchar('\s')<cr>
+" iab #i #include<c-r>=Eatchar('\s')<cr>
+" iab pu public<c-r>=Eatchar('\s')<cr>
+" iab pr private<c-r>=Eatchar('\s')<cr>
+" iab str struct<c-r>=Eatchar('\s')<cr>
+" iab cl class<c-r>=Eatchar('\s')<cr>
+" iab td typedef<c-r>=Eatchar('\s')<cr>
+" iab ad: android:<c-r>=Eatchar('\s')<cr>
+" iab xdate <c-r>=strftime("20%y/%m/%d")<cr>
 
 " Now I can use ``sy`` to copy to system clipboard
 " and ``sp`` to paste to system clipboard.
@@ -191,10 +229,10 @@ nnoremap s "+
 vnoremap s "+
 
 " Close html tag
-let g:closetag_html_style=1
-source ~/.vim/scripts/closetag.vim
-imap <C-c> <C-_>
-nmap <C-c> <C-_>
+" let g:closetag_html_style=1
+" source ~/.vim/scripts/closetag.vim
+" imap <C-c> <C-_>
+" nmap <C-c> <C-_>
 
 " Open files
 nnoremap <Leader>f :tab drop 
@@ -205,10 +243,20 @@ let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 " 不要缓存
 let g:ctrlp_use_caching = 0
-let g:ctrlp_custom_ignore = 'node_modules'
+let g:ctrlp_custom_ignore = {
+      \ 'dir':  '\v[\/](\.git|node_modules|vendor|coverage|dist)$',
+      \ 'file': '\v\.(map)$',
+      \ }
 
-" for markdown
-filetype plugin on
-set shell=bash\ -i
+au FileType go nmap <leader>r <Plug>(go-run)
+au FileType go nmap <leader>b <Plug>(go-build)
+au FileType go nmap <leader>t <Plug>(go-test)
+au FileType go nmap <leader>c <Plug>(go-coverage)
+let g:go_fmt_autosave = 0
+
+let r_indent_align_args = 0
+let r_indent_ess_comments = 0
+let r_indent_ess_compatible = 0
+
 " End coding
 " ============================================================
