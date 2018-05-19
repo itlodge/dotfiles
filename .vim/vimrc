@@ -1,45 +1,33 @@
 " 去掉vi一致性的Bug
-set nocompatible              " be iMproved, required
-filetype off                  " required
+" set nocompatible              " be iMproved, required
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-set runtimepath^=~/.vim/bundle/ctrlp.vim
+call plug#begin('~/.vim/plugged')
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'pangloss/vim-javascript'
+" Plug 'ternjs/tern_for_vim'
+Plug 'fatih/vim-go'
+Plug 'vim-airline/vim-airline'
+Plug 'posva/vim-vue'
+Plug 'tpope/vim-fugitive'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'aklt/plantuml-syntax'
+Plug 'leafgarland/typescript-vim'
+Plug 'djoshea/vim-autoread'
+Plug 'vim-scripts/indentpython.vim'
+Plug 'w0rp/ale'
+" Plug 'junegunn/fzf.vim' 
+" Plug 'airblade/vim-rooter'
+Plug 'roxma/nvim-yarp'
+Plug 'roxma/vim-hug-neovim-rpc'
+Plug 'Shougo/deoplete.nvim'
+Plug 'zchee/deoplete-jedi'
+Plug 'zchee/deoplete-clang'
 
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
-
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
-
-Plugin 'pangloss/vim-javascript'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'ternjs/tern_for_vim'
-Plugin 'scrooloose/syntastic'
-" Plugin 'digitaltoad/vim-pug'
-Plugin 'fatih/vim-go'
-Plugin 'vim-airline/vim-airline'
-Plugin 'mattn/emmet-vim'
-" I don't need
-" Plugin 'Raimondi/delimitMate'
-Plugin 'posva/vim-vue'
-Plugin 'tpope/vim-fugitive'
-Plugin 'terryma/vim-multiple-cursors'
-" Plugin 'dkprice/vim-easygrep'
-Plugin 'buoto/gotests-vim'
-Plugin 'jalvesaq/Nvim-R'
-" Plugin 'artur-shaik/vim-javacomplete2'
-Plugin 'aklt/plantuml-syntax'
-" Plugin 'scrooloose/vim-slumlord'
-Plugin 'leafgarland/typescript-vim'
-Plugin 'djoshea/vim-autoread'
-
-call vundle#end()            " required
-filetype plugin indent on    " required
+call plug#end()
 
 " 配置立即生效
-autocmd BufWritePost $MYVIMRC source $MYVIMRC
+" autocmd BufWritePost $MYVIMRC source $MYVIMRC
+" autocmd FileType vue syntax sync fromstart
 
 " ============================================================
 " Begin ui
@@ -64,44 +52,46 @@ set showcmd
 
 " Show line and column number
 set ruler 
+set ttyfast
+set lazyredraw
 
-if exists("+showtabline")
-  if !exists("*MyTabLine")
-     function MyTabLine()
-         let s = ''
-         let t = tabpagenr()
-         let i = 1
-         while i <= tabpagenr('$')
-             let buflist = tabpagebuflist(i)
-             let winnr = tabpagewinnr(i)
-             "let s .= '%' . i . 'T'
-             "let s .= (i == t ? '%1*' : '%2*')
-             "let s .= ' '
-             "let s .= i . ':'
-             "let s .= winnr . '/' . tabpagewinnr(i,'$')
-             let s .= ' %*'
-             let s .= (i == t ? '%#TabLineSel#' : '%#TabLine#')
-             let file = bufname(buflist[winnr - 1])
-             let file = fnamemodify(file, ':p:t')
-             if file == ''
-                 let file = '[No Name]'
-             endif
-             let s .= file
-             let i = i + 1
-         endwhile
-         let s .= '%T%#TabLineFill#%='
-         let s .= (tabpagenr('$') > 1 ? '%999XX' : 'X')
-         return s
-     endfunction
-  endif
-     set stal=2
-     set tabline=%!MyTabLine()
-     map     <F10>    :tabnext<CR>
-     map!    <F10>    <C-O>:tabnext<CR>
-     map     <S-F10>  :tabprev<CR>
-     map!    <S-F10>  <C-O>:tabprev<CR>
-
-endif 
+" if exists("+showtabline")
+"   if !exists("*MyTabLine")
+"      function MyTabLine()
+"          let s = ''
+"          let t = tabpagenr()
+"          let i = 1
+"          while i <= tabpagenr('$')
+"              let buflist = tabpagebuflist(i)
+"              let winnr = tabpagewinnr(i)
+"              "let s .= '%' . i . 'T'
+"              "let s .= (i == t ? '%1*' : '%2*')
+"              "let s .= ' '
+"              "let s .= i . ':'
+"              "let s .= winnr . '/' . tabpagewinnr(i,'$')
+"              let s .= ' %*'
+"              let s .= (i == t ? '%#TabLineSel#' : '%#TabLine#')
+"              let file = bufname(buflist[winnr - 1])
+"              let file = fnamemodify(file, ':p:t')
+"              if file == ''
+"                  let file = '[No Name]'
+"              endif
+"              let s .= file
+"              let i = i + 1
+"          endwhile
+"          let s .= '%T%#TabLineFill#%='
+"          let s .= (tabpagenr('$') > 1 ? '%999XX' : 'X')
+"          return s
+"      endfunction
+"   endif
+"      set stal=2
+"      set tabline=%!MyTabLine()
+"      map     <F10>    :tabnext<CR>
+"      map!    <F10>    <C-O>:tabnext<CR>
+"      map     <S-F10>  :tabprev<CR>
+"      map!    <S-F10>  <C-O>:tabprev<CR>
+" 
+" endif 
 
 " Disable swap files
 set noswapfile
@@ -115,6 +105,7 @@ set writebackup
 set laststatus=2
 " hi statusline ctermfg=15 ctermbg=2
 
+" let g:airline#extensions#tabline#enabled = 1
 " End ui
 " ============================================================
 
@@ -131,29 +122,31 @@ if $TMUX == ''
   set clipboard+=unnamed
 endif
 
+" let g:rooter_change_directory_for_non_project_files = 'current'
+
 " syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
 
 " let g:syntastic_always_populate_loc_list = 1
 " let g:syntastic_auto_loc_list = 1
 " let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_javascript_checkers = ['eslint']
+" let g:syntastic_check_on_wq = 0
+" let g:syntastic_javascript_checkers = ['eslint']
 " let g:syntastic_typescript_checkers = ['tslint']
-let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
+" let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
 " typescript: find tslint.json
-function! FindTslintConfig()
-    return fnamemodify(findfile('tslint.json', './;'), ':p')
-endfunction
-function! FindTypescriptRoot()
-    return fnamemodify(findfile('tsconfig.json', './;'), ':h')
-endfunction
+" function! FindTslintConfig()
+"     return fnamemodify(findfile('tslint.json', './;'), ':p')
+" endfunction
+" function! FindTypescriptRoot()
+"     return fnamemodify(findfile('tsconfig.json', './;'), ':h')
+" endfunction
 " let g:syntastic_typescript_checkers = ['tsc', FindTypescriptRoot() . '/node_modules/.bin/tslint']
-let g:syntastic_typescript_checkers = ['tsc', './node_modules/.bin/tslint']
+" let g:syntastic_typescript_checkers = ['tsc', './node_modules/.bin/tslint']
 " let g:syntastic_typescript_tslint_args = ['-c', FindTslintConfig(), '--type-check', '--project', FindTypescriptRoot()]
-let g:syntastic_typescript_tslint_args = ['-c', FindTslintConfig()]
+" let g:syntastic_typescript_tslint_args = ['-c', FindTslintConfig()]
 
 " js standard
 "autocmd bufwritepost *.js silent !standard-format -w %
@@ -206,12 +199,12 @@ map n nzz
 map N Nzz
 
 " Abbreviations
-if !exists("*Eatchar")
-  func Eatchar(pat)
-    let c = nr2char(getchar(0))
-    return (c =~ a:pat) ? '' : c
-  endfunc
-endif
+" if !exists("*Eatchar")
+"   func Eatchar(pat)
+"     let c = nr2char(getchar(0))
+"     return (c =~ a:pat) ? '' : c
+"   endfunc
+" endif
 
 " iab #d #define<c-r>=Eatchar('\s')<cr>
 " iab #i #include<c-r>=Eatchar('\s')<cr>
@@ -239,24 +232,91 @@ nnoremap <Leader>f :tab drop
 nnoremap <S-h> gT
 nnoremap <S-l> gt
 
+" nnoremap <c-p> :Files<ENTER>
+" nnoremap <leader>a :Ag<ENTER>
+
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 " 不要缓存
-let g:ctrlp_use_caching = 0
+let g:ctrlp_use_caching = 0 
 let g:ctrlp_custom_ignore = {
-      \ 'dir':  '\v[\/](\.git|node_modules|vendor|coverage|dist)$',
+      \ 'dir':  '\v[\/](\.git|node_modules|vendor|coverage|dist|build)$',
       \ 'file': '\v\.(map)$',
       \ }
+let g:ctrlp_user_command = 'ag --ignore=".git" --ignore="build" --ignore="node_modules" --ignore="vendor" --ignore="coverage" --ignore="dist" %s -l --hidden -g ""'
 
-au FileType go nmap <leader>r <Plug>(go-run)
-au FileType go nmap <leader>b <Plug>(go-build)
-au FileType go nmap <leader>t <Plug>(go-test)
-au FileType go nmap <leader>c <Plug>(go-coverage)
-let g:go_fmt_autosave = 0
+" au FileType go nmap <leader>r <Plug>(go-run)
+" au FileType go nmap <leader>b <Plug>(go-build)
+" au FileType go nmap <leader>t <Plug>(go-test)
+" au FileType go nmap <leader>c <Plug>(go-coverage)
+" let g:go_fmt_autosave = 0
 
-let r_indent_align_args = 0
-let r_indent_ess_comments = 0
-let r_indent_ess_compatible = 0
+" function! FindNodeRoot()
+"     return fnamemodify(findfile('package.json', './;'), ':h')
+" endfunction
 
+" Put this in vimrc or a plugin file of your own.
+" After this is configured, :ALEFix will try and fix your JS code with ESLint.
+let g:ale_fixers = {
+\   'javascript': ['eslint'],
+\   'typescript': ['tslint'],
+\}
+
+" Set this setting in vimrc if you want to fix files automatically on save.
+" This is off by default.
+let g:ale_fix_on_save = 1
+" let NERDTreeMapOpenInTab='<ENTER>'
+
+" Enable completion where available.
+" let g:ale_completion_enabled = 1
+" Write this in your vimrc file
+" let g:ale_lint_on_text_changed = 'never'
+" You can disable this option too
+" if you don't want linters to run on opening a file
+let g:ale_lint_on_enter = 0
+nnoremap <Leader>d :ALEGoToDefinitionInTab<ENTER>
+" Set this. Airline will handle the rest.
+let g:airline#extensions#ale#enabled = 1
+let g:airline_highlighting_cache=1
+
+" If installed using Homebrew
+" set rtp+=/usr/local/opt/fzf
+
+let g:deoplete#enable_at_startup = 1
+
+inoremap <silent><expr> <TAB>
+    \ pumvisible() ? "\<C-n>" :
+    \ <SID>check_back_space() ? "\<TAB>" :
+    \ deoplete#mappings#manual_complete()
+function! s:check_back_space() abort "{{{
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~ '\s'
+endfunction"}}}
+
+" Disable Deoplete when selecting multiple cursors starts
+function! Multiple_cursors_before()
+    if exists('*deoplete#disable')
+        exe 'call deoplete#toggle()'
+    elseif exists(':NeoCompleteLock') == 2
+        exe 'NeoCompleteLock'
+    endif
+endfunction
+
+" Enable Deoplete when selecting multiple cursors ends
+function! Multiple_cursors_after()
+    if exists('*deoplete#enable')
+        exe 'call deoplete#toggle()'
+    elseif exists(':NeoCompleteUnlock') == 2
+        exe 'NeoCompleteUnlock'
+    endif
+endfunction
+
+let g:deoplete#sources#clang#libclang_path = '/usr/local/Cellar/llvm/5.0.0/lib/libclang.dylib'
+
+" let g:fzf_buffers_jump = 1
+" autocmd BufEnter * silent! lcd %:p:h
+" map <F5> :wall!<CR>:!sbcl --load foo.cl<CR><CR>
+
+"let g:completor_clang_binary = '/usr/bin/clang'
 " End coding
 " ============================================================
